@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // se cojen los valores guardados en el método onSaveInstanceState
         if (savedInstanceState != null) {
-            // se coje el locale y se configura lalocalización otra vez
+            // se coje el locale y se configura la localización otra vez
             Locale nuevaloc1 = new Locale(savedInstanceState.getString("locale"));
             Locale.setDefault(nuevaloc1);
             Configuration config = new Configuration();
