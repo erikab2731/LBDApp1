@@ -160,7 +160,6 @@ public class Carrodelacompra extends AppCompatActivity {
         // Se guardan la lista de productos y la fecha a mostrar
         savedInstanceState.putParcelableArrayList("key", losproductos);
         savedInstanceState.putString("valorfecha", fecha.getText().toString());
-        Log.d("tag", "e esta guardando locale" + local);
         savedInstanceState.putString("locale",local);
 
     }

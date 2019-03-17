@@ -180,7 +180,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //lanzar el dialogo o fragment y poner la linea leída
+        // devuelve la linea leída
         return linea1;
     }
 }

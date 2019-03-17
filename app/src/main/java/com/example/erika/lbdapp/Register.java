@@ -68,7 +68,6 @@ public class Register extends AppCompatActivity {
                 Cursor cursor = bd.rawQuery("SELECT COUNT(1) FROM Usuarios WHERE email = '"+email+"'", null);
                 cursor.moveToFirst();
                 boolean existe = cursor.getString(0).equals("1");
-                Log.d("existe", "existe: "+existe);
                 cursor.close();
                 if (!existe){
                     ContentValues nuevo = new ContentValues();
@@ -78,8 +77,6 @@ public class Register extends AppCompatActivity {
                     nuevo.put("telefono", phone);
                     nuevo.put("direc", direc);
                     bd.insert("Usuarios", null, nuevo);
-
-                    Log.d("holaaaaa", "ha insertado : " + nombreusuarios + "   " + email + "  " + password);
                     Intent inten = new Intent(Register.this, LoginActivity.class);
                     startActivity(inten);
                 }

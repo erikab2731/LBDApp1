@@ -120,16 +120,13 @@ public class LoginActivity extends AppCompatActivity {
                     Locale.setDefault(nuevaloc);
                     config.locale = nuevaloc;
                 }
-                Log.d("nuevalocale", "onClick: "+nuevaloc.toString() );
-                nuevalocale = nuevaloc.toString();
+                 nuevalocale = nuevaloc.toString();
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("nuevaconfi", nuevalocale);
                 editor.commit();
                 editor.apply();
-                Log.d("nuevalocale", "guardarahimismo: "+nuevalocale );
                 getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
                 finish();
-                Log.d("despues del finish", "onClick: "+nuevalocale );
                 startActivity(getIntent());
 
             }

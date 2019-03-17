@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -148,7 +147,7 @@ public class Main3Activity extends AppCompatActivity implements dialogtalla.dial
         String descripcion = productonuevo.getDescripcion();
         // enviamos el emailuser y el producto nuevo lo añadimos a la basededatos
         in.putExtra("emailuser", valor);
-        //añadimos el producto a la tabla carrodelacompra en la base de datos, he creado esta tabla para poder identificar el producto y al usuario al que pertenece
+        //añadimos el producto a la tabla carrodelacompra en la base de datos, he creado esta tabla para identificar el producto y al usuario al que pertenece
         ContentValues nuevos = new ContentValues();
         nuevos.put("talla", talla);
         nuevos.put("precio", precio);
