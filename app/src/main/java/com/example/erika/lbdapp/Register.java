@@ -43,7 +43,7 @@ public class Register extends AppCompatActivity {
 
         }
 
-
+        // Se cogen los elementos ppor id
         btncancelar = findViewById(R.id.btnCancelar);
         btnguardar = findViewById(R.id.btnguardar);
         Nombreusuario = findViewById(R.id.Nombre);
@@ -51,10 +51,10 @@ public class Register extends AppCompatActivity {
         editemail = findViewById(R.id.editemail);
         editpassword = findViewById(R.id.editTpass);
         editphone = findViewById(R.id.editel);
-
+        // se abre conexión con la base de datos
         miBD GestorDB = new miBD (this, "MiBD", null, 2);
         bd = GestorDB.getWritableDatabase();
-
+        //
         btnguardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class Register extends AppCompatActivity {
                 String direc = direccion.getText().toString();
                 String phone= editphone.getText().toString();
 
-
+                // se comprueba que el usuario no exista en la base de datos y se añade a la base de datos.
                 Cursor cursor = bd.rawQuery("SELECT COUNT(1) FROM Usuarios WHERE email = '"+email+"'", null);
                 cursor.moveToFirst();
                 boolean existe = cursor.getString(0).equals("1");

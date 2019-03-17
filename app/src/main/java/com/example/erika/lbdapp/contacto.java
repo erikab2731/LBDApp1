@@ -166,6 +166,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
     }
     @Override
     public String applyText1() {
+        // se lee el fichero de texto se crea el string linea en el que se almacenara el texto y linea1 se usa como variable auxiliar.
         String linea1 = " ";
         String linea = " ";
         InputStream fich = getResources().openRawResource(R.raw.nota);
