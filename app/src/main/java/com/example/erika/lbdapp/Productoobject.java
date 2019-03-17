@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Productoobject implements Parcelable {
+    //La clase productoobject que implementa Parcelable, se utiliza para enviar objetos de tipo parcelable en los intents ytambien
+    //  y también para el mñetodo onsaveinstancestate
     private Integer imagen;
     private String  nombre;
     private String talla;

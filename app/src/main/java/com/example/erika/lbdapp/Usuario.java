@@ -58,6 +58,10 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
         textdireccion = (TextView) findViewById(R.id.textdirec);
         texttelefono = (TextView) findViewById(R.id.texttelefono);
         if (savedInstanceState != null) {
+
+            texttelefono.setText(savedInstanceState.getString("valortextelefono"));
+            textdireccion.setText(savedInstanceState.getString("valortextdireccion"));
+            textnombre.setText(savedInstanceState.getString("valortextnombre"));
             // se coje el locale y se configura lalocalización otra vez
             Locale nuevaloc1 = new Locale(savedInstanceState.getString("locale"));
             Locale.setDefault(nuevaloc1);
@@ -65,9 +69,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             config.locale = nuevaloc1;
             local = nuevaloc1.toString();
             getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-            texttelefono.setText(savedInstanceState.getString("valortextelefono"));
-            textdireccion.setText(savedInstanceState.getString("valortextdireccion"));
-            textnombre.setText(savedInstanceState.getString("valortextnombre"));
+
 
 
         } else {
@@ -86,26 +88,26 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             }
         });
 
-        // si
-        volver = (Button) findViewById(R.id.btnvolver);
+        // si el usuario pulsa en el botón compartir , se encia un intent con la información del usuario.
+        volver =  findViewById(R.id.btnvolver);
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lista de cesta de la compra");
-                String text = "Nombre : " + textnombre.getText().toString() + "\n" + "Correo : " + textemail.getText().toString() + "\n" + "Direccion : " +textdireccion.getText().toString() +  "\n" + "Teléfono : " + texttelefono.getText().toString()+"\n";
+                i.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.infousuario);
+                String text = getResources().getText(R.string.nombre) + textnombre.getText().toString() + "\n" + getResources().getText(R.string.correo) + textemail.getText().toString() + "\n" + getResources().getText(R.string.dir) +textdireccion.getText().toString() +  "\n" + getResources().getText(R.string.tel) + texttelefono.getText().toString()+"\n";
                 i.putExtra(android.content.Intent.EXTRA_TEXT,text);
-                startActivity(Intent.createChooser(i, "Lista"));
+                startActivity(Intent.createChooser(i, getResources().getText(R.string.infousuario)));
             }
         });
-        // inicializamos el boton "actualización dirección" con su correspondiente id
+        // inicializamos el boton "actualizar dirección" con su correspondiente id
         actdirec = (Button) findViewById(R.id.actdirec);
         // si el usuario pulsa el botón "actualizar dirección"
         actdirec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // se cambia la variable direc a true, esta variable sirve como identificador del botón que lanza el dialogo.
+                // se pone la variable boton a 1 , sirve como identificador del botón que lanza el dialogo.
                 boton = 1;
                 // se lanza el dialogo
                 dialogeditar dialog = new dialogeditar();
@@ -113,7 +115,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             }
         });
 
-
+        // inicializamos el boton "actualizar nombre" con su correspondiente id
         actnombre = (Button) findViewById(R.id.actnombre);
         actnombre.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +126,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             }
         });
 
-
+        // inicializamos el boton "actualizar password" con su correspondiente id
         actpass = (Button) findViewById(R.id.actpass);
         actpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +136,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
                 dialog2.show(((FragmentActivity) Usuario.this).getSupportFragmentManager(), "etiqueta");
             }
         });
-
+        // inicializamos el boton "actualizar telefono" con su correspondiente id
         acttelefono = (Button) findViewById(R.id.acttel);
         acttelefono.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +147,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             }
         });
 
-
+        // inicializamos el boton "eliminar" con su correspondiente id
         eliminar = findViewById(R.id.btneliminar);
         eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +159,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
 
     }
 
-
+        //Se cojen los datos del usuario de la base de datos
     public void inicializardatos() {
         miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
         bd = GestorDB1.getWritableDatabase();
@@ -182,6 +184,8 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
     public void applyTexts(String lseleccion) {
         miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
         bd = GestorDB1.getWritableDatabase();
+        // se hace el update correspondiente segun el valor de la variable botón que se ha actualizado
+        // cuando el usuario pulsa el boton.
         switch (boton) {
             case 1:
                 bd.execSQL("UPDATE Usuarios SET direc ='" + lseleccion + "' WHERE email='" + valor + "'");

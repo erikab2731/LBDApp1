@@ -84,7 +84,7 @@ public class Register extends AppCompatActivity {
                     startActivity(inten);
                 }
                 else {
-                    Toast.makeText(Register.this,"El email ya existe en el registro, cambia de email",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,"Datos incorrectos!",Toast.LENGTH_LONG).show();
                 }
             }
         });

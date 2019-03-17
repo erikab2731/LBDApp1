@@ -71,4 +71,9 @@
     <string name= "felec"> "Date to pick up:"</string>
     <string name= "editinfous">"Edit information"</string>
     <string name= "electalla">"Choose Size"</string>
+    <string name= "emailnovalido">Email is not valid, try again </string>
+    <string name= "contranovalida">Password is not valid, try again </string>
+    <string name= "usernotregister">User is not registered , try again </string>
+    <string name= "canal">LBDapp Channel </string>
+    <string name= "infousuario">User information </string>
 </resources>

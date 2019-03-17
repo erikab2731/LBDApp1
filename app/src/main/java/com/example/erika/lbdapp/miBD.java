@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
 public class miBD extends SQLiteOpenHelper {
-
+        //Se crean las tablas necesarias Usuarios, productos y carro de la compra , la tabla compra se utilizara en futuras implementaciones.
     public String tusuarios = "CREATE TABLE Usuarios('Codigo' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'Nombre' VARCHAR(50) ,'Password' VARCHAR(10),'email' VARCHAR(50), 'telefono' VARCHAR(50),'direc' VARCHAR(50))";
     public String tproductos = "CREATE TABLE Producto('Codigo' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'Nombre' VARCHAR(50) , 'talla' Varchar(2), 'precio'  VARCHAR(50),'imagen' INTEGER, 'descripcion' VARCHAR(100))";
     public String tcompra = "CREATE TABLE Compras('CodigoCompra' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'CodigoUsuario' INTEGER , 'PrecioTotal' VARCHAR(50))";

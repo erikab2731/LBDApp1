@@ -72,5 +72,10 @@
     <string name= "felec"> "La fecha elegida es:"</string>
     <string name= "editinfous">"Editar información de usuario"</string>
     <string name= "electalla">"Elegir Talla"</string>
+    <string name= "emailnovalido">"el email no es valido, intenta de nuevo"</string>
+    <string name= "contranovalida">"La contraseña no es válida, intenta de nuevo"</string>
+    <string name= "usernotregister">"el usuario no esta registrado, registrate para poder iniciar sesión"</string>
+    <string name= "canal">LBDapp Canal </string>
+    <string name= "infousuario">Información de usuario </string>
 
 </resources>

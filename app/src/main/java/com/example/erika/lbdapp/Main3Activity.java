@@ -37,7 +37,7 @@ public class Main3Activity extends AppCompatActivity implements dialogtalla.dial
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (savedInstanceState != null) {
-            // se coje el locale y se configura lalocalización otra vez
+            // se coje el locale y se configura la localización otra vez
             Locale nuevaloc1 = new Locale(savedInstanceState.getString("locale"));
             Locale.setDefault(nuevaloc1);
             Configuration config = new Configuration();
@@ -46,8 +46,6 @@ public class Main3Activity extends AppCompatActivity implements dialogtalla.dial
             getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
 
         }
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             valor = extras.getString("emailuser");
