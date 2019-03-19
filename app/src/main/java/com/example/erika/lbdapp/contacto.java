@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacto);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -58,7 +57,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
             public void onClick(View v) {
                 // cuando el usuario pulsa en el botón
                 DialogText dialog = new DialogText();
-                dialog.show(((FragmentActivity) contacto.this).getSupportFragmentManager(), "etiqueta");
+                dialog.show( contacto.this.getSupportFragmentManager(), "etiqueta");
 
             }
         });
@@ -74,7 +73,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
                     //EL PERMISO NO ESTÁ CONCEDIDO, PEDIRLO
 
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(contacto.this, Manifest.permission.CALL_PHONE))
+                    if(ActivityCompat.shouldShowRequestPermissionRationale(contacto.this, Manifest.permission.CALL_PHONE))
                     {
                         // MOSTRAR AL USUARIO UNA EXPLICACIÓN DE POR QUÉ ES NECESARIO EL PERMISO
 
@@ -83,7 +82,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
                         //EL PERMISO NO ESTÁ CONCEDIDO TODAVÍA O EL USUARIO HA INDICADO
                         // QUE NO QUIERE QUE SE LE VUELVA A SOLICITAR
 
-                        if (pedido == true ) {
+                        if (pedido) {
                             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             Uri uri = Uri.fromParts("package", getPackageName(), null);
@@ -168,7 +167,7 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
     public String applyText1() {
         // se lee el fichero de texto se crea el string linea en el que se almacenara el texto y linea1 se usa como variable auxiliar.
         String linea1 = " ";
-        String linea = " ";
+        String linea;
         InputStream fich = getResources().openRawResource(R.raw.nota);
         BufferedReader buff = new BufferedReader(new InputStreamReader(fich));
         try {

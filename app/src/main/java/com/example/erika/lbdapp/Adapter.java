@@ -52,7 +52,7 @@ public class Adapter extends BaseAdapter {
         // cojemos la posicion en la que se ha pulsado
         final int pos = position;
         // Ponemos el layout
-        convertView = inflater.inflate(R.layout.grid_item2, null);
+        convertView =(View) inflater.inflate(R.layout.grid_item2, null);
         // cojemos el imagebutton por id
         ImageButton imgbtn = convertView.findViewById(R.id.imageButton2);
         // quitamos el padding del botón para que no tenga margenes
