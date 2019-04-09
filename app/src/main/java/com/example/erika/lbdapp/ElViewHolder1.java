@@ -1,7 +1,5 @@
 package com.example.erika.lbdapp;
-
-
-        import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
         import android.view.View;
         import android.widget.Button;
         import android.widget.ImageView;
@@ -19,7 +17,6 @@ public class ElViewHolder1 extends RecyclerView.ViewHolder {
         eltexto1 = v.findViewById(R.id.carro2);
         eltexto2 = v.findViewById(R.id.carro3);
         eltexto3 = v.findViewById(R.id.carro4);
-
     }
 
 

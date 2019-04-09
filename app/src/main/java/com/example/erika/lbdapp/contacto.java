@@ -147,10 +147,6 @@ public class contacto extends AppCompatActivity implements DialogText.dialogtext
     }
 
 
-
-
-
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
