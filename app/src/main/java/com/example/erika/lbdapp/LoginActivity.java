@@ -6,10 +6,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -204,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
     private String getUserpassPrefs(){
         return prefs.getString("pass", "");
     }
+
     protected void onDestroy() {
         // cerramos conexión base de datos antes de destruir el activity
         bd.close();
