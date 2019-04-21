@@ -43,7 +43,7 @@ public class ElAdaptadorRecycler extends RecyclerView.Adapter<ElViewHolder> {
     public void onBindViewHolder(@NonNull ElViewHolder elViewHolder, int i) {
         final int e = i;
         elViewHolder.eltexto.setText(losproductos.get(i).getNombre());
-        elViewHolder.eltexto1.setText(losproductos.get(i).getTalla());
+       // elViewHolder.eltexto1.setText(losproductos.get(i).getTalla());
         elViewHolder.eltexto2.setText(losproductos.get(i).getDescripcion());
         elViewHolder.eltexto3.setText(losproductos.get(i).getPrecio().toString());
         Picasso.with(contexto).load(losproductos.get(i).getImagen()).fit().into(elViewHolder.laimagen);

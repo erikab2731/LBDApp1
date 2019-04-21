@@ -1,11 +1,13 @@
 package com.example.erika.lbdapp;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Locale;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class Register extends AppCompatActivity {
 
     private Button btncancelar;
@@ -36,11 +40,15 @@ public class Register extends AppCompatActivity {
     private EditText editphone;
     private SQLiteDatabase bd;
     private String local = Locale.getDefault().toString();
-
+    private Context contexto = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
 
         if (savedInstanceState != null) {
             // se coje el locale y se configura lalocalización otra vez
@@ -75,7 +83,8 @@ public class Register extends AppCompatActivity {
                 String phone = editphone.getText().toString();
 
 
-                registrarenbdlocal(nombreusuarios, password, email, phone, direc);
+              //  registrarenbdlocal(nombreusuarios, password, email, phone, direc);
+                registrarenbdremota(nombreusuarios, password, email, phone, direc);
 
               /*  // se comprueba que el usuario no exista en la base de datos y se añade a la base de datos.
                 Cursor cursor = bd.rawQuery("SELECT COUNT(1) FROM Usuarios WHERE email = '"+email+"'", null);
@@ -98,8 +107,8 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Datos incorrectos!",Toast.LENGTH_LONG).show();
                 }*/
 
-                Intent inten = new Intent(Register.this, LoginActivity.class);
-                startActivity(inten);
+              //  Intent inten = new Intent(Register.this, LoginActivity.class);
+               // startActivity(inten);
             }
         });
 
@@ -134,8 +143,8 @@ public class Register extends AppCompatActivity {
             nuevo.put("direc", direc);
             bd.insert("Usuarios", null, nuevo);
             bd.close();
-            // Intent inten = new Intent(Register.this, LoginActivity.class);
-            // startActivity(inten);
+            Intent inten = new Intent(Register.this, LoginActivity.class);
+             startActivity(inten);
         } else {
             Toast.makeText(Register.this, "Datos incorrectos!", Toast.LENGTH_LONG).show();
         }
@@ -144,38 +153,41 @@ public class Register extends AppCompatActivity {
 
     public void registrarenbdremota(String nombreusuarios, String password, String email, String phone, String direc) {
 
-        String direccion = "https://134.209.235.115/ebracamonte001/WEB/usuarios.php";
+        HttpsURLConnection urlConnection= GeneradorConexionesSeguras.getInstance().crearConexionSegura(contexto,"https://134.209.235.115/ebracamonte001/WEB/usuarios.php");
 
-        HttpURLConnection urlConnection = null;
+        urlConnection.setConnectTimeout(5000);
+        urlConnection.setReadTimeout(5000);
+
+        Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("Nombre", nombreusuarios)
+                .appendQueryParameter("Password", password)
+                .appendQueryParameter("email", email)
+                .appendQueryParameter("telefono", phone)
+                .appendQueryParameter("direc", direc);
+        String parametros = builder.build().getEncodedQuery();
+
         try {
-            URL destino = new URL(direccion);
-            urlConnection = (HttpURLConnection) destino.openConnection();
-            urlConnection.setConnectTimeout(5000);
-            urlConnection.setReadTimeout(5000);
-
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("Nombre", nombreusuarios)
-                    .appendQueryParameter("Password", password)
-                    .appendQueryParameter("email", email)
-                    .appendQueryParameter("telefono", phone)
-                    .appendQueryParameter("direc", direc);
-            String parametros = builder.build().getEncodedQuery();
-
             urlConnection.setRequestMethod("POST");
-            urlConnection.setDoOutput(true);
-            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-            PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
-            out.print(parametros);
-            out.close();
-
         } catch (ProtocolException e) {
             e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        }
+        urlConnection.setDoOutput(true);
+        urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(urlConnection.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        out.print(parametros);
+        out.close();
+
+        Intent inten3 = new Intent(Register.this, LoginActivity.class);
+        startActivity(inten3);
+
+
+
 
     }
 }
