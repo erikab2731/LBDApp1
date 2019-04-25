@@ -65,18 +65,23 @@
     <string name="nombre8">"Vestido NocheBlanca"</string>
     <string name="nombre9">"Vaqueros Summer"</string>
     <string name="nombre10">"Peto Yellow Top"</string>
-    <string name= "idioma">cambiar idioma</string>
-    <string name= "añadir">añadir</string>
-    <string name= "tienes">"Tienes que recoger tu compra!"</string>
-    <string name= "felec"> "La fecha elegida es:"</string>
-    <string name= "editinfous">"Editar información de usuario"</string>
-    <string name= "electalla">"Elegir Talla"</string>
-    <string name= "emailnovalido">"el email no es valido, intenta de nuevo"</string>
-    <string name= "contranovalida">"La contraseña no es válida, intenta de nuevo"</string>
-    <string name= "usernotregister">"el usuario no esta registrado, registrate para poder iniciar sesión"</string>
-    <string name= "lista">Lista</string>
-    <string name= "canal">LBDapp Canal </string>
-    <string name= "infousuario">Información de usuario </string>
+    <string name="idioma">cambiar idioma</string>
+    <string name="añadir">añadir</string>
+    <string name="tienes">"Tienes que recoger tu compra!"</string>
+    <string name="felec"> "La fecha elegida es:"</string>
+    <string name="editinfous">"Editar información de usuario"</string>
+    <string name="electalla">"Elegir Talla"</string>
+    <string name="emailnovalido">"el email no es valido, intenta de nuevo"</string>
+    <string name="contranovalida">"La contraseña no es válida, intenta de nuevo"</string>
+    <string name="usernotregister">"el usuario no esta registrado, registrate para poder iniciar sesión"</string>
+    <string name="lista">Lista</string>
+    <string name="canal">LBDapp Canal </string>
+    <string name="infousuario">Información de usuario </string>
+    <string name="mislooks"> Mi Guardarropa </string>
+    <string name="direcciontienda"> Av Urquijo 44 Bilbao </string>
+    <string name="verenmaps"> ver en maps</string>
 
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

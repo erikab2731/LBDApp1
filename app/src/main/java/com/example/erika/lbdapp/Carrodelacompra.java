@@ -1,14 +1,13 @@
 package com.example.erika.lbdapp;
 
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
@@ -21,11 +20,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
-public class Carrodelacompra extends AppCompatActivity {
+
+public class Carrodelacompra extends AppCompatActivity implements BDremota.AsyncResponse{
     private String valor = "valorinicialemail";
     private Button btnelegir;
     private Button btncomprar;
@@ -36,6 +45,8 @@ public class Carrodelacompra extends AppCompatActivity {
     private ArrayList<Productoobject> losproductos = new ArrayList<Productoobject>();
     ElAdaptadorRecycler1 eladaptador;
     private String local = Locale.getDefault().toString();
+    String msg ="";
+    private Context contexto = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +54,8 @@ public class Carrodelacompra extends AppCompatActivity {
         setContentView(R.layout.activity_carrodelacompra);
         super.onCreate(savedInstanceState);
         // Se coje la toolbar
-        Toolbar myToolbar = findViewById(R.id.toolbar);
+        Toolbar myToolbar;
+        myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         // las dos opciones siguientes a true nos permiten utilizar la flecha que esta en la toolbar  para volver hacia atrás
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -90,8 +102,36 @@ public class Carrodelacompra extends AppCompatActivity {
         btncomprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertdialogo2 alertdialog = new alertdialogo2();
-                alertdialog.show(((FragmentActivity) Carrodelacompra.this).getSupportFragmentManager(), "etiqueta");
+               // alertdialogo2 alertdialog = new alertdialogo2();
+               // alertdialog.show(((FragmentActivity) Carrodelacompra.this).getSupportFragmentManager(), "etiqueta");
+
+                FirebaseInstanceId.getInstance().getInstanceId()
+                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                if (!task.isSuccessful()) {
+                                    msg = "failed";
+                                }
+                                String token = task.getResult().getToken();
+                                msg = token;
+                                Log.d("firebase", msg);
+                                Toast.makeText(Carrodelacompra.this, msg, Toast.LENGTH_SHORT).show();
+
+
+                                String php = "https://134.209.235.115/ebracamonte001/WEB/messaging.php";
+                                JSONObject parametrosJSON = new JSONObject();
+                                parametrosJSON.put("token",token);
+                                parametrosJSON.put("fecha",fecha.getText());
+
+                                BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
+                                bdremota.execute();
+
+
+
+
+                            }
+                        });
+
             }
 
         });
@@ -131,15 +171,7 @@ public class Carrodelacompra extends AppCompatActivity {
                 NotificationManager elManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
                 NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(getApplicationContext(), "123");
                 // comprobamos si estamos en una versión que aprueba canales en las notificaciones
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel elCanal = new NotificationChannel("123", "canal", NotificationManager.IMPORTANCE_DEFAULT);
-                    elManager.createNotificationChannel(elCanal);
-                    elCanal.setDescription(getResources().getText(R.string.canal).toString());
-                    elCanal.enableLights(true);
-                    elCanal.setLightColor(Color.RED);
-                    elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-                    elCanal.enableVibration(true);
-                }
+
                 // Configuramos la notificación, le ponemos el icono de flor, titulo y texto, y la fecha elegida.
                 elBuilder.setSmallIcon(R.drawable.flor)
                         .setContentTitle((getResources().getText(R.string.app_name)))
@@ -226,4 +258,8 @@ public class Carrodelacompra extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void processFinish(String output) {
+
+    }
 }

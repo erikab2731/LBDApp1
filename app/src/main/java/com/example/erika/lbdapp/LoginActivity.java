@@ -7,8 +7,10 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +18,17 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements BDremota.AsyncResponse{
 
     private SharedPreferences prefs;
     private EditText editTextemail;
@@ -31,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button idioma;
     String nuevalocale ="";
     Boolean sehacambiadoidioma = false;
+    Context contexto= this;
+    private Boolean registrar = false;
+    private String password = "111";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         //método para inicializar todos los elementos
         cojerelementos();
+
+        inicializarfirebase();
         // se cojen las preferencias del usuario
         prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         // Se inicializa el gestor de Bases de Datos
@@ -64,12 +79,22 @@ public class LoginActivity extends AppCompatActivity {
              @Override
              public void onClick(View v) {
                  String email = editTextemail.getText().toString();
-                 String password = editTextPassword.getText().toString();
+                 password = editTextPassword.getText().toString();
                 //Se cojen el email y el password
                  // en el método login se comprueba que el email y el password es válido
+
                  if (login(email,password)){
+
+                     String php = "https://134.209.235.115/ebracamonte001/WEB/login.php";
+                     JSONObject parametrosJSON = new JSONObject();
+                     parametrosJSON.put("email",email);
+                     parametrosJSON.put("Password",password);
+
+                     BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
+                     bdremota.execute();
+
                      //Sitodo va bien se lanza un intent hacia el main2activity, que es la actividad que representa el menú principal
-                     Intent intent= new Intent(LoginActivity.this,Main2Activity.class);
+                     /*Intent intent= new Intent(LoginActivity.this,Main2Activity.class);
                      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                      //se envia el email que es el que se necesitará para controlar que usuario esta en cada activity
                      intent.putExtra("email",email);
@@ -79,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                      }
                      startActivity(intent);
                      // Se llama a al método para guardar preferencias
-                     saveOnPreferences(email,password);
+                     saveOnPreferences(email,password);*/
                  }
              }
          });
@@ -134,6 +159,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void inicializarfirebase() {
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "subscribing";
+                        if (!task.isSuccessful()) {
+                            msg = "failed";
+                        }
+                        Log.d("firebase", msg);
+                        Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private void setcredencialesdeusuario() {
         //Se cojen el email y el password de las preferencias
         String email = getUsermailPrefs();
@@ -157,10 +197,13 @@ public class LoginActivity extends AppCompatActivity {
     }
     private boolean login(String email, String password){
 
-        Cursor cursor = bd.rawQuery("SELECT COUNT(1) FROM Usuarios WHERE email = '"+email+"'AND Password = '" + password + "'", null);
+       /* String php = "https://134.209.235.115/ebracamonte001/WEB/login.php";
+        JSONObject parametrosJSON = new JSONObject();
+        parametrosJSON.put("email",email);
+        parametrosJSON.put("Password",password);
 
-        cursor.moveToFirst();
-        boolean existe = cursor.getString(0).equals("1");
+        BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
+        bdremota.execute();*/
 
         if(!emailvalido(email)){
             Toast.makeText(this,R.string.emailnovalido, Toast.LENGTH_LONG).show();
@@ -168,12 +211,8 @@ public class LoginActivity extends AppCompatActivity {
         } else if (!passwordvalido(password)){
             Toast.makeText(this,R.string.contranovalida,Toast.LENGTH_LONG).show();
             return false;
-        } else {
-            if(existe){
-                return true;
-            } else { Toast.makeText(this,R.string.usernotregister ,Toast.LENGTH_LONG).show();
-                return false;
-            }
+        } else{
+            return true;
 
         }
     }
@@ -215,6 +254,39 @@ public class LoginActivity extends AppCompatActivity {
         String nueva= prefs.getString("nuevaconfi", "");
         nuevalocale = nueva;
         savedInstanceState.putString("locale",nuevalocale);
+
+    }
+
+    @Override
+    public void processFinish(String output) {
+        String nombre = " ";
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject json1 = (JSONObject) parser.parse(output);
+            if(json1.get("nombre") == null){
+                Toast.makeText(this,"el usuario no existe en la bbdd", Toast.LENGTH_LONG).show();
+            }else {
+                nombre = json1.get("nombre").toString();
+                String email = json1.get("email").toString();
+                Log.i("tag", "elstatuscode es: " + nombre);
+                if (nombre != null) {
+                    Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    //se envia el email que es el que se necesitará para controlar que usuario esta en cada activity
+                    intent.putExtra("email", email);
+                    intent.putExtra("json",json1.toString());
+                    if (sehacambiadoidioma) {
+                        // si se ha cambiado el idioma cojemos el nuevolocale
+                        intent.putExtra("locale", nuevalocale);
+                    }
+                    startActivity(intent);
+                    // Se llama a al método para guardar preferencias
+                    saveOnPreferences(email, password);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 }

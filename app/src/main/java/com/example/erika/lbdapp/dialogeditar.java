@@ -23,7 +23,7 @@ public class dialogeditar extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         view = inflater.inflate(R.layout.dialogo2, null);
-        editar = (EditText) view.findViewById(R.id.edit);
+        editar = view.findViewById(R.id.edit);
         builder.setView(view)
                 .setTitle(R.string.editinfous)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

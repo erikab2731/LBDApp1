@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "613555679387",
+    "firebase_url": "https://lbdapp.firebaseio.com",
+    "project_id": "lbdapp",
+    "storage_bucket": "lbdapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613555679387:android:4fbc27ace22016d6",
+        "android_client_info": {
+          "package_name": "com.example.erika.lbdapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613555679387-flp4qkfv73u8vf4muds9rbp9pdrqah0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKeD3YUrcqpRh42EKZAr5w-dQx6WEnkCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613555679387-flp4qkfv73u8vf4muds9rbp9pdrqah0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,13 +23,15 @@ public class Adapter extends BaseAdapter {
     private ArrayList<String> datos;
     private ArrayList<Integer> imagenes;
     private String emailusuario;
+    private String json;
 
-    public Adapter(Context pcontext, ArrayList<String> pdatos, ArrayList<Integer> pimagenes, String email){
+    public Adapter(Context pcontext, ArrayList<String> pdatos, ArrayList<Integer> pimagenes, String email, String datosjson){
         contexto = pcontext;
         datos = pdatos;
         imagenes = pimagenes;
         inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         emailusuario = email;
+        json = datosjson;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class Adapter extends BaseAdapter {
         // cojemos la posicion en la que se ha pulsado
         final int pos = position;
         // Ponemos el layout
-        convertView =(View) inflater.inflate(R.layout.grid_item2, null);
+        convertView = inflater.inflate(R.layout.grid_item2, null);
         // cojemos el imagebutton por id
         ImageButton imgbtn = convertView.findViewById(R.id.imageButton2);
         // quitamos el padding del botón para que no tenga margenes
@@ -75,6 +77,8 @@ public class Adapter extends BaseAdapter {
                         Intent intent2= new Intent(contexto,Usuario.class);
                         //Si el usuario ha pulsado 0, nos vamos al activity del perfil del usuario y enviamos el correo del  usuario
                         intent2.putExtra("emailuser",emailusuario);
+                        Log.d("adapterrrrrrrrrrrrrr", "onCreate: "+ json);
+                        intent2.putExtra("jsondatos",json);
                         contexto.startActivity(intent2);
                         break;
                     case 2:

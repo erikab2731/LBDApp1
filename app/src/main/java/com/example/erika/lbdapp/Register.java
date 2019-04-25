@@ -17,8 +17,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -29,7 +33,9 @@ import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Register extends AppCompatActivity {
+import static java.lang.System.out;
+
+public class Register extends AppCompatActivity implements BDremota.AsyncResponse{
 
     private Button btncancelar;
     private Button btnguardar;
@@ -84,31 +90,13 @@ public class Register extends AppCompatActivity {
 
 
               //  registrarenbdlocal(nombreusuarios, password, email, phone, direc);
-                registrarenbdremota(nombreusuarios, password, email, phone, direc);
-
-              /*  // se comprueba que el usuario no exista en la base de datos y se añade a la base de datos.
-                Cursor cursor = bd.rawQuery("SELECT COUNT(1) FROM Usuarios WHERE email = '"+email+"'", null);
-                cursor.moveToFirst();
-                boolean existe = cursor.getString(0).equals("1");
-                cursor.close();
-                if (!existe){
-                    ContentValues nuevo = new ContentValues();
-                    nuevo.put("Nombre", nombreusuarios);
-                    nuevo.put("Password", password);
-                    nuevo.put("email", email);
-                    nuevo.put("telefono", phone);
-                    nuevo.put("direc", direc);
-                    bd.insert("Usuarios", null, nuevo);
-                    bd.close();
-                    Intent inten = new Intent(Register.this, LoginActivity.class);
-                    startActivity(inten);
+                try {
+                    registrarenbdremota(nombreusuarios, password, email, phone, direc);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                else {
-                    Toast.makeText(Register.this,"Datos incorrectos!",Toast.LENGTH_LONG).show();
-                }*/
 
-              //  Intent inten = new Intent(Register.this, LoginActivity.class);
-               // startActivity(inten);
+
             }
         });
 
@@ -151,43 +139,28 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public void registrarenbdremota(String nombreusuarios, String password, String email, String phone, String direc) {
+    public void registrarenbdremota(String nombreusers, String password, String email, String phone, String direc) throws IOException {
 
-        HttpsURLConnection urlConnection= GeneradorConexionesSeguras.getInstance().crearConexionSegura(contexto,"https://134.209.235.115/ebracamonte001/WEB/usuarios.php");
 
-        urlConnection.setConnectTimeout(5000);
-        urlConnection.setReadTimeout(5000);
+        String php = "https://134.209.235.115/ebracamonte001/WEB/usuarios.php";
+        JSONObject parametrosJSON1 = new JSONObject();
+        parametrosJSON1.put("Nombre",nombreusers);
+        parametrosJSON1.put("Password",password);
+        parametrosJSON1.put("email",email);
+        parametrosJSON1.put("telefono",phone);
+        parametrosJSON1.put("direc",direc);
 
-        Uri.Builder builder = new Uri.Builder()
-                .appendQueryParameter("Nombre", nombreusuarios)
-                .appendQueryParameter("Password", password)
-                .appendQueryParameter("email", email)
-                .appendQueryParameter("telefono", phone)
-                .appendQueryParameter("direc", direc);
-        String parametros = builder.build().getEncodedQuery();
-
-        try {
-            urlConnection.setRequestMethod("POST");
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        }
-        urlConnection.setDoOutput(true);
-        urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-        PrintWriter out = null;
-        try {
-            out = new PrintWriter(urlConnection.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        out.print(parametros);
-        out.close();
+        BDremota bd = new BDremota(contexto,parametrosJSON1, php);
+        bd.execute();
 
         Intent inten3 = new Intent(Register.this, LoginActivity.class);
         startActivity(inten3);
 
 
+    }
 
+    @Override
+    public void processFinish(String output) throws ParseException {
 
     }
 }

@@ -77,5 +77,6 @@
     <string name= "usernotregister">"el usuario no esta registrado, registrate para poder iniciar sesión"</string>
     <string name= "canal">LBDapp Canal </string>
     <string name= "infousuario">Información de usuario </string>
+    <string name= "mislooks"> Mi Guardarropa </string>
 
 </resources>

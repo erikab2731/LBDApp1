@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ import java.util.Locale;
 
 public class Main2Activity extends AppCompatActivity {
         private String local = Locale.getDefault().toString();
+        private String jsondatos = "hola";
+        private String valor = "nousuario";
+        private Context contexto = this;
+        private ArrayList<String> datos = new ArrayList<String>();
+        private ArrayList<Integer> imagenes = new ArrayList<Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +35,11 @@ public class Main2Activity extends AppCompatActivity {
 
         }
 
-        String valor = "nousuario";
-        Context contexto = this;
-        ArrayList<String> datos = new ArrayList<String>();
+
         datos.add("CATALOGO");
         datos.add("CESTA DE LA COMPRA");
         datos.add("MI CUENTA");
         datos.add("CONTACTO");
-        ArrayList<Integer> imagenes = new ArrayList<Integer>();
         imagenes.add(R.drawable.catalogo);
         imagenes.add(R.drawable.perfil);
         imagenes.add(R.drawable.cesta);
@@ -46,11 +49,11 @@ public class Main2Activity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             valor = extras.getString("email");
-
+            jsondatos = extras.getString("json");
         }
-
+        Log.d("hellooouuuuuuu", "onCreate: "+ jsondatos);
         GridView grid = findViewById(R.id.gridview);
-        Adapter eladap = new Adapter(contexto, datos, imagenes, valor);
+        Adapter eladap = new Adapter(contexto, datos, imagenes,valor , jsondatos);
         grid.setAdapter(eladap);
 
 

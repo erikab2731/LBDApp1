@@ -76,4 +76,5 @@
     <string name= "usernotregister">User is not registered , try again </string>
     <string name= "canal">LBDapp Channel </string>
     <string name= "infousuario">User information </string>
+    <string name= "mislooks">My wardrobe </string>
 </resources>

@@ -2,14 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.erika.lbdapp.Usuario"
     android:layout_width="match_parent"  android:layout_height="match_parent"
     android:background="@drawable/fondo">
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Usuario">
+    tools:context="com.example.erika.lbdapp.Usuario">
 
     <include
         android:id="@+id/toolbar"
@@ -89,68 +88,84 @@
                 android:text="@string/vacio" />
 
             <Button
+                android:id="@+id/mislooks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/mislooks"
+                app:backgroundTint="@color/colorPrimary" />
+
+            <Button
                 android:id="@+id/actnombre"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
-                android:text="@string/ACT1" />
+                android:text="@string/ACT1"
+                app:backgroundTint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/actpass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
                 android:text="@string/ACTCONTRA"
-                tools:text="Actualizar Contraseña" />
+                app:backgroundTint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/actdirec"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
-                android:text="@string/ACTDIR" />
+                android:text="@string/ACTDIR"
+                app:backgroundTint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/acttel"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
-                app:backgroundTint="@color/colorPrimary"
-                android:text="@string/ACTEL" />
+                android:text="@string/ACTEL"
+                app:backgroundTint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnlogout"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
-                app:backgroundTint="@color/colorPrimary"
-                android:text="@string/CERRARSESION" />
+                android:text="@string/CERRARSESION"
+                app:backgroundTint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnvolver"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
-                app:backgroundTint="@color/colorPrimary"
-                android:text="@string/COMPDATOS" />
+                android:text="@string/COMPDATOS"
+                app:backgroundTint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btneliminar"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorPrimary"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
-                android:text="@string/elimcuenta" />
+                android:text="@string/elimcuenta"
+                app:backgroundTint="@color/colorPrimary" />
 
 
         </LinearLayout>

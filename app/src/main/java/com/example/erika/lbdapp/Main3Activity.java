@@ -30,7 +30,7 @@ public class Main3Activity extends AppCompatActivity implements dialogtalla.dial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

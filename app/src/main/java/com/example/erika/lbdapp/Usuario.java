@@ -13,11 +13,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.util.Locale;
 
 public class Usuario extends AppCompatActivity implements alertdialog1.alertidaloglistener, dialogeditar.dialogeditarlistener {
     private String valor = "valorinicialemail";
     private String local = Locale.getDefault().toString();
+    private String json = "hola";
     TextView textemail;
     TextView texttelefono;
     TextView textnombre;
@@ -30,6 +35,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
     Button actnombre;
     Button acttelefono;
     Button eliminar;
+    Button guardarropa;
 
     SQLiteDatabase bd;
 
@@ -41,7 +47,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
         setContentView(R.layout.activity_usuario);
         super.onCreate(savedInstanceState);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -49,14 +55,15 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             valor = extras.getString("emailuser");
-
+            json = extras.getString("jsondatos");
+            Log.d("enusuario", "onCreate: "+ json);
         }
-        textemail = (TextView) findViewById(R.id.textemail);
+        textemail = findViewById(R.id.textemail);
         // ponemos el valor del usuario en el textview del email
         textemail.setText(valor);
-        textnombre = (TextView) findViewById(R.id.textnombre);
-        textdireccion = (TextView) findViewById(R.id.textdirec);
-        texttelefono = (TextView) findViewById(R.id.texttelefono);
+        textnombre = findViewById(R.id.textnombre);
+        textdireccion = findViewById(R.id.textdirec);
+        texttelefono = findViewById(R.id.texttelefono);
         if (savedInstanceState != null) {
 
             texttelefono.setText(savedInstanceState.getString("valortextelefono"));
@@ -74,11 +81,15 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
 
         } else {
 
-            inicializardatos();
+            try {
+                inicializardatos();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
 
-        logout = (Button) findViewById(R.id.btnlogout);
+        logout = findViewById(R.id.btnlogout);
         // si el usuario pulsa el botón "logout"
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +113,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             }
         });
         // inicializamos el boton "actualizar dirección" con su correspondiente id
-        actdirec = (Button) findViewById(R.id.actdirec);
+        actdirec = findViewById(R.id.actdirec);
         // si el usuario pulsa el botón "actualizar dirección"
         actdirec.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,39 +122,39 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
                 boton = 1;
                 // se lanza el dialogo
                 dialogeditar dialog = new dialogeditar();
-                dialog.show(((FragmentActivity) Usuario.this).getSupportFragmentManager(), "etiqueta");
+                dialog.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
             }
         });
 
         // inicializamos el boton "actualizar nombre" con su correspondiente id
-        actnombre = (Button) findViewById(R.id.actnombre);
+        actnombre = findViewById(R.id.actnombre);
         actnombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boton = 2;
                 dialogeditar dialog1 = new dialogeditar();
-                dialog1.show(((FragmentActivity) Usuario.this).getSupportFragmentManager(), "etiqueta");
+                dialog1.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
             }
         });
 
         // inicializamos el boton "actualizar password" con su correspondiente id
-        actpass = (Button) findViewById(R.id.actpass);
+        actpass = findViewById(R.id.actpass);
         actpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boton = 3;
                 dialogeditar dialog2 = new dialogeditar();
-                dialog2.show(((FragmentActivity) Usuario.this).getSupportFragmentManager(), "etiqueta");
+                dialog2.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
             }
         });
         // inicializamos el boton "actualizar telefono" con su correspondiente id
-        acttelefono = (Button) findViewById(R.id.acttel);
+        acttelefono = findViewById(R.id.acttel);
         acttelefono.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boton = 4;
                 dialogeditar dialog2 = new dialogeditar();
-                dialog2.show(((FragmentActivity) Usuario.this).getSupportFragmentManager(), "etiqueta");
+                dialog2.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
             }
         });
 
@@ -153,15 +164,26 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             @Override
             public void onClick(View v) {
                 alertdialog1 alertdialog = new alertdialog1();
-                alertdialog.show(((FragmentActivity) Usuario.this).getSupportFragmentManager(), "etiqueta");
+                alertdialog.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
+            }
+        });
+
+        guardarropa =  findViewById(R.id.mislooks);
+        guardarropa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intento = new Intent(Usuario.this, Mislooks.class);
+                startActivity(intento);
+
             }
         });
 
     }
 
         //Se cojen los datos del usuario de la base de datos
-    public void inicializardatos() {
-        miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
+    public void inicializardatos() throws ParseException {
+        /*miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
         bd = GestorDB1.getWritableDatabase();
         Cursor cursor = bd.rawQuery("SELECT * FROM Usuarios WHERE email = '" + valor + "'", null);
         if (cursor.moveToFirst()) {
@@ -176,10 +198,25 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             textnombre.setText(name);
 
         }
-        bd.close();
+        bd.close();*/
+        Log.d("antes de parsear", "onCreate: "+ json);
+        JSONParser parser = new JSONParser();
+        JSONObject jsonverdadero = (JSONObject) parser.parse(json);
+        Log.d("JSONVERDADERO", "onCreate: "+ jsonverdadero);
+        String name ="jiewjfi";
+        name= jsonverdadero.get("nombre").toString();
+       // String email = jsonverdadero.get("email").toString();
+        String direccion ="qwdwqd";
+                direccion = jsonverdadero.get("direccion").toString();
+        String telefono ="earfvqerv";
+                telefono= jsonverdadero.get("telefono").toString();
+        texttelefono.setText(telefono);
+        textdireccion.setText(direccion);
+        textnombre.setText(name);
+
+
 
     }
-
 
     public void applyTexts(String lseleccion) {
         miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
