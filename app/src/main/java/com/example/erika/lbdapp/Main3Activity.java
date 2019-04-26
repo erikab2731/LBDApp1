@@ -156,10 +156,7 @@ public class Main3Activity extends AppCompatActivity implements dialogtalla.dial
         nuevos.put("Nombre", nombre);
         bd.insert("Carrodelacompra", null, nuevos);
         startActivity(in);
-
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);

@@ -1,6 +1,7 @@
 package com.example.erika.lbdapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.json.simple.JSONObject;
@@ -10,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.ProtocolException;
 import java.nio.charset.StandardCharsets;
 

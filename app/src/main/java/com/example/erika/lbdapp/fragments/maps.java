@@ -98,14 +98,18 @@ public class maps extends Fragment implements OnMapReadyCallback {
         gMap = googleMap;
 
         // Posicionar el mapa en una localización y con un nivel de zoom
-       /* LatLng latLng = new LatLng(36.679582, -5.444791);
+        LatLng latLng = new LatLng(43.257, -2.923440);
+        LatLng latLng1 = new LatLng(43.259, -2.923444);
+        LatLng latLng2 = new LatLng(43.250, -2.923444);
         // Un zoom mayor que 13 hace que el emulador falle, pero un valor deseado para
         // callejero es 17 aprox.
         float zoom = 13;
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
         // Colocar un marcador en la misma posición
-        gMap.addMarker(new MarkerOptions().position(latLng));*/
+        gMap.addMarker(new MarkerOptions().position(latLng));
+        gMap.addMarker(new MarkerOptions().position(latLng1));
+        gMap.addMarker(new MarkerOptions().position(latLng2));
     }
 
     /**

@@ -29,13 +29,18 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
     private boolean pedido = false;
     private String local = Locale.getDefault().toString();
     Fragment currentfragment;
+    Boolean maps = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacto);
         Toolbar myToolbar = findViewById(R.id.toolbar);
-        currentfragment = new BlankFragment();
-        changefragment(currentfragment);
+        setSupportActionBar(myToolbar);
+        // las dos opciones siguientes a true nos permiten utilizar la flecha que esta en la toolbar  para volver hacia atrás
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
          String valor= extras.getString("emailuser");
@@ -48,7 +53,14 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
             config.locale = nuevaloc1;
             local = nuevaloc1.toString();
             getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+            maps= savedInstanceState.getBoolean("maps");
+        }
 
+        if (!maps) {
+            currentfragment = new BlankFragment();
+            changefragment(currentfragment);
+        }else {
+            cambiaramaps(currentfragment);
         }
 
 
@@ -94,6 +106,7 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putString("locale",local);
+        savedInstanceState.putBoolean("maps",maps);
 
     }
     @Override
@@ -125,10 +138,11 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
         dialog.show( contacto.this.getSupportFragmentManager(), "etiqueta");
     }
 
-    @Override
-    public void cambiaramaps() {
-        Fragment mapa = new maps();
-        changefragment(mapa);
+
+    public void cambiaramaps(Fragment fragment1) {
+        maps = true;
+        fragment1 = new maps();
+        changefragment(fragment1);
     }
 
 

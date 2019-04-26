@@ -84,7 +84,8 @@ public class BlankFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.cambiaramaps();
+
+                    mListener.cambiaramaps(new Fragment());
                 }
             }
         });
@@ -129,6 +130,6 @@ public class BlankFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction();
-        void cambiaramaps();
+        void cambiaramaps(Fragment fragment);
     }
 }

@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,9 +28,10 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 
@@ -110,14 +111,10 @@ public class Carrodelacompra extends AppCompatActivity implements BDremota.Async
                             @Override
                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
                                 if (!task.isSuccessful()) {
-                                    msg = "failed";
+                                    msg =  "error";
                                 }
                                 String token = task.getResult().getToken();
-                                msg = token;
-                                Log.d("firebase", msg);
-                                Toast.makeText(Carrodelacompra.this, msg, Toast.LENGTH_SHORT).show();
-
-
+                                Log.d("token", "el token que se envia es : "+ msg );
                                 String php = "https://134.209.235.115/ebracamonte001/WEB/messaging.php";
                                 JSONObject parametrosJSON = new JSONObject();
                                 parametrosJSON.put("token",token);
@@ -125,10 +122,6 @@ public class Carrodelacompra extends AppCompatActivity implements BDremota.Async
 
                                 BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
                                 bdremota.execute();
-
-
-
-
                             }
                         });
 
@@ -258,8 +251,20 @@ public class Carrodelacompra extends AppCompatActivity implements BDremota.Async
         return true;
     }
 
-    @Override
-    public void processFinish(String output) {
 
+    public void processFinish(String output) {
+        String data = " ";
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject json1 = (JSONObject) parser.parse(output);
+
+            data = json1.get("data").toString();
+            // String email = json1.get("email").toString();
+            Log.i("tag", "dataaaaaa: " + data);
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

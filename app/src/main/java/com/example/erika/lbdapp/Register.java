@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,21 +18,8 @@ import android.widget.Toast;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Locale;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import static java.lang.System.out;
 
 public class Register extends AppCompatActivity implements BDremota.AsyncResponse{
 
