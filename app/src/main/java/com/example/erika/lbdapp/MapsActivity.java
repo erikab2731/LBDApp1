@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -89,24 +90,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
 
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-
-                            if (location != null) {
+            /* if (location != null) {
                                 lblLatitud.setText("Latitud: " + String.valueOf(location.getLatitude()));
                                 lblLongitud.setText("Longitud: " + String.valueOf(location.getLongitude()));
                             } else {
                                 lblLatitud.setText("Latitud: (desconocida)");
                                 lblLongitud.setText("Longitud: (desconocida)");
-                            }
-                        }
-                    })
-                    .addOnFailureListener(this, new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) { }
-                    });
+                            }*/
 
 
         }

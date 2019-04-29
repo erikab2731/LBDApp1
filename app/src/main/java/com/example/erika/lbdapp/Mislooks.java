@@ -1,7 +1,5 @@
 package com.example.erika.lbdapp;
-
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -106,7 +104,7 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
                         e.printStackTrace();
                     }
                 }
-
+                /*
                 long id = ContentUris.parseId(url);
                 // Wait until MINI_KIND thumbnail is generated.
                 Bitmap miniThumb = Images.Thumbnails.getThumbnail(getContentResolver(), id, Images.Thumbnails.MINI_KIND, null);
@@ -118,7 +116,7 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
                 Intent i = new Intent(Mislooks.this,Migaleria.class);
                 i.putExtra("uri",url);
                 startActivity(i);
-
+                */
 
             }
 
@@ -228,6 +226,7 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
 
         }
 
+
     }
 
     @Override
@@ -245,8 +244,7 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        // Se guardan la lista de productos y la fecha a mostrar
-
+        // se guarda la imagen que se muestra en el imageview
         savedInstanceState.putParcelable("laminiatura", laminiatura);
 
     }

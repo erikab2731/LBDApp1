@@ -55,13 +55,13 @@
             android:id="@+id/btnguardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="guardar" />
 
         <Button
             android:id="@+id/btnpublicar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="publicar" />
 
         <Button
             android:id="@+id/galeria"
@@ -74,6 +74,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SACAR FOTO " />
+
+        <Button
+            android:id="@+id/btngaleria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
     </LinearLayout>
 
 

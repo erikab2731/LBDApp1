@@ -1,7 +1,6 @@
 package com.example.erika.lbdapp;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.json.simple.JSONObject;
