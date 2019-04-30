@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,18 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity implements BDremota.AsyncResponse{
+public class LoginActivity extends AppCompatActivity implements ConectarAlServidor.AsyncResponse{
 
     private SharedPreferences prefs;
     private EditText editTextemail;
@@ -91,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements BDremota.AsyncRe
                      parametrosJSON.put("email",email);
                      parametrosJSON.put("Password",password);
 
-                     BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
+                     ConectarAlServidor bdremota = new ConectarAlServidor(contexto,parametrosJSON, php);
                      bdremota.execute();
 
                      //Sitodo va bien se lanza un intent hacia el main2activity, que es la actividad que representa el menú principal
@@ -156,23 +148,9 @@ public class LoginActivity extends AppCompatActivity implements BDremota.AsyncRe
 
             }
         });
-
-
     }
 
     private void inicializarfirebase() {
-        FirebaseMessaging.getInstance().subscribeToTopic("weather")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "subscribing";
-                        if (!task.isSuccessful()) {
-                            msg = "failed";
-                        }
-                        Log.d("firebase", msg);
-                        Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         Intent myService = new Intent(this, servicioFirebase.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -210,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements BDremota.AsyncRe
         parametrosJSON.put("email",email);
         parametrosJSON.put("Password",password);
 
-        BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
+        ConectarAlServidor bdremota = new ConectarAlServidor(contexto,parametrosJSON, php);
         bdremota.execute();*/
 
         if(!emailvalido(email)){

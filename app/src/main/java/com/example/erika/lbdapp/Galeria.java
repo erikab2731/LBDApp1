@@ -15,7 +15,7 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Galeria extends AppCompatActivity implements DescargarImagen.AsyncResponse, BDremota.AsyncResponse{
+public class Galeria extends AppCompatActivity implements DescargarImagen.AsyncResponse, ConectarAlServidor.AsyncResponse{
     private ArrayList<String> productos = new ArrayList<String>();
     private ArrayList<Bitmap> imagenes = new ArrayList<Bitmap>();
     private Context elcontexto = this;
@@ -29,7 +29,7 @@ public class Galeria extends AppCompatActivity implements DescargarImagen.AsyncR
         JSONObject parametrosJSON1 = new JSONObject();
         parametrosJSON1.put("Nombre","hola");
 
-        BDremota bd = new BDremota(this,parametrosJSON1, php);
+        ConectarAlServidor bd = new ConectarAlServidor(this,parametrosJSON1, php);
         bd.execute();
 
         RecyclerView lalista = findViewById(R.id.elreciclerview2);
@@ -55,7 +55,7 @@ public class Galeria extends AppCompatActivity implements DescargarImagen.AsyncR
 
         JSONObject json2 = (JSONObject) parser.parse(output);
         nombre = json2.get("titulos").toString();
-        Log.i("tag", "elstatuscode es: " + nombre);
+
 
         org.json.simple.JSONArray json3 = (org.json.simple.JSONArray) parser.parse(nombre);
 
@@ -68,7 +68,6 @@ public class Galeria extends AppCompatActivity implements DescargarImagen.AsyncR
            eladaptador.notifyDataSetChanged();
         }
 
-        Log.d("finally", "processFinish: " + productos.toString() );
 
         for (int i = 0 ; i < productos.size() ;i++ ){
             DescargarImagen dc = new DescargarImagen(this,productos.get(i));

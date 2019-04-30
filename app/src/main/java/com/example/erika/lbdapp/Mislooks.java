@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 import android.provider.MediaStore.Images;
 
-public class Mislooks extends AppCompatActivity implements BDremota.AsyncResponse{
+public class Mislooks extends AppCompatActivity implements ConectarAlServidor.AsyncResponse{
     ImageView elImageView;
     Button btn;
     Button btn2;
@@ -131,7 +131,7 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
                     parametrosJSON2.put("imagen", fotoen64);
                     parametrosJSON2.put("titulo", nombreimagen);
 
-                    BDremota bd = new BDremota(contexto, parametrosJSON2, php);
+                    ConectarAlServidor bd = new ConectarAlServidor(contexto, parametrosJSON2, php);
                     bd.execute();
                 }
                 else{

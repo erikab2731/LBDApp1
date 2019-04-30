@@ -1,16 +1,13 @@
 package com.example.erika.lbdapp;
 
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,14 +25,12 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 
-public class Carrodelacompra extends AppCompatActivity implements BDremota.AsyncResponse{
+public class Carrodelacompra extends AppCompatActivity implements ConectarAlServidor.AsyncResponse{
     private String valor = "valorinicialemail";
     private Button btnelegir;
     private Button btncomprar;
@@ -118,10 +113,18 @@ public class Carrodelacompra extends AppCompatActivity implements BDremota.Async
                                 String php = "https://134.209.235.115/ebracamonte001/WEB/messaging.php";
                                 JSONObject parametrosJSON = new JSONObject();
                                 parametrosJSON.put("token",token);
-                                parametrosJSON.put("fecha",fecha.getText());
 
-                                BDremota bdremota = new BDremota(contexto,parametrosJSON, php);
-                                bdremota.execute();
+                                Log.d("fecha", "onComplete: "+ fecha.getText());
+                                if(fecha.getText().length() != 0) {
+                                    parametrosJSON.put("fecha", fecha.getText());
+
+                                    ConectarAlServidor bdremota = new ConectarAlServidor(contexto, parametrosJSON, php);
+                                    bdremota.execute();
+                                } else{
+                                    Toast.makeText(Carrodelacompra.this, "elige una fecha", Toast.LENGTH_LONG).show();
+                                }
+
+
                             }
                         });
 
@@ -157,26 +160,7 @@ public class Carrodelacompra extends AppCompatActivity implements BDremota.Async
         });
         // cojemos la etiqueta reordatorio por id y si el usuario pulsa en el botón
         // lanzamos la notificación
-        recordatorio = findViewById(R.id.button);
-        recordatorio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NotificationManager elManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
-                NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(getApplicationContext(), "123");
-                // comprobamos si estamos en una versión que aprueba canales en las notificaciones
 
-                // Configuramos la notificación, le ponemos el icono de flor, titulo y texto, y la fecha elegida.
-                elBuilder.setSmallIcon(R.drawable.flor)
-                        .setContentTitle((getResources().getText(R.string.app_name)))
-                        .setContentText((getResources().getText(R.string.tienes)))
-                        .setSubText((getResources().getText(R.string.felec)).toString() + fecha.getText())
-                        .setVibrate(new long[]{0, 1000, 500, 1000})
-                        .setAutoCancel(true);
-
-                elManager.notify(1, elBuilder.build());
-
-            }
-        });
     }
 
 
@@ -253,18 +237,6 @@ public class Carrodelacompra extends AppCompatActivity implements BDremota.Async
 
 
     public void processFinish(String output) {
-        String data = " ";
-        try {
-            JSONParser parser = new JSONParser();
-            JSONObject json1 = (JSONObject) parser.parse(output);
 
-            data = json1.get("data").toString();
-            // String email = json1.get("email").toString();
-            Log.i("tag", "dataaaaaa: " + data);
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 }

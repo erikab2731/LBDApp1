@@ -16,14 +16,14 @@ import java.nio.charset.StandardCharsets;
 import javax.net.ssl.HttpsURLConnection;
 
 
-public class BDremota extends AsyncTask <Void, Void, String> {
+public class ConectarAlServidor extends AsyncTask <Void, Void, String> {
     public AsyncResponse delegate=null;
     private Context mContext;
     private JSONObject datos;
     private String php;
 
 
-    public BDremota(Context context, JSONObject pdatos , String pphp) {
+    public ConectarAlServidor(Context context, JSONObject pdatos , String pphp) {
         delegate = (AsyncResponse)context;
         mContext = context;
         datos = pdatos;

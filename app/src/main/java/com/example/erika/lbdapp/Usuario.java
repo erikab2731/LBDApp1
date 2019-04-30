@@ -113,60 +113,7 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
             }
         });
         // inicializamos el boton "actualizar dirección" con su correspondiente id
-        actdirec = findViewById(R.id.actdirec);
-        // si el usuario pulsa el botón "actualizar dirección"
-        actdirec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // se pone la variable boton a 1 , sirve como identificador del botón que lanza el dialogo.
-                boton = 1;
-                // se lanza el dialogo
-                dialogeditar dialog = new dialogeditar();
-                dialog.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
-            }
-        });
 
-        // inicializamos el boton "actualizar nombre" con su correspondiente id
-        actnombre = findViewById(R.id.actnombre);
-        actnombre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boton = 2;
-                dialogeditar dialog1 = new dialogeditar();
-                dialog1.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
-            }
-        });
-
-        // inicializamos el boton "actualizar password" con su correspondiente id
-        actpass = findViewById(R.id.actpass);
-        actpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boton = 3;
-                dialogeditar dialog2 = new dialogeditar();
-                dialog2.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
-            }
-        });
-        // inicializamos el boton "actualizar telefono" con su correspondiente id
-        acttelefono = findViewById(R.id.acttel);
-        acttelefono.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boton = 4;
-                dialogeditar dialog2 = new dialogeditar();
-                dialog2.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
-            }
-        });
-
-        // inicializamos el boton "eliminar" con su correspondiente id
-        eliminar = findViewById(R.id.btneliminar);
-        eliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertdialog1 alertdialog = new alertdialog1();
-                alertdialog.show(Usuario.this.getSupportFragmentManager(), "etiqueta");
-            }
-        });
 
         guardarropa =  findViewById(R.id.mislooks);
         guardarropa.setOnClickListener(new View.OnClickListener() {
@@ -219,23 +166,31 @@ public class Usuario extends AppCompatActivity implements alertdialog1.alertidal
     }
 
     public void applyTexts(String lseleccion) {
-        miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
-        bd = GestorDB1.getWritableDatabase();
+       // miBD GestorDB1 = new miBD(Usuario.this, "MiBD", null, 2);
+       // bd = GestorDB1.getWritableDatabase();
         // se hace el update correspondiente segun el valor de la variable botón que se ha actualizado
         // cuando el usuario pulsa el boton.
+
+        String atributo = "";
+        String cambio = lseleccion;
+
         switch (boton) {
             case 1:
+                atributo = "direc";
                 bd.execSQL("UPDATE Usuarios SET direc ='" + lseleccion + "' WHERE email='" + valor + "'");
                 textdireccion.setText(lseleccion);
                 break;
             case 2:
+                atributo = "Nombre";
                 bd.execSQL("UPDATE Usuarios SET Nombre ='" + lseleccion + "' WHERE email='" + valor + "'");
                 textnombre.setText(lseleccion);
                 break;
             case 3:
+                atributo = "Password";
                 bd.execSQL("UPDATE Usuarios SET Password ='" + lseleccion + "' WHERE email='" + valor + "'");
                 break;
             case 4:
+                atributo = "telefono";
                 bd.execSQL("UPDATE Usuarios SET telefono ='" + lseleccion + "' WHERE email='" + valor + "'");
                 texttelefono.setText(lseleccion);
                 break;

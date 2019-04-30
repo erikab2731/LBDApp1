@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +20,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.Locale;
 
-public class Register extends AppCompatActivity implements BDremota.AsyncResponse{
+public class Register extends AppCompatActivity implements ConectarAlServidor.AsyncResponse{
 
     private Button btncancelar;
     private Button btnguardar;
@@ -136,7 +135,7 @@ public class Register extends AppCompatActivity implements BDremota.AsyncRespons
         parametrosJSON1.put("telefono",phone);
         parametrosJSON1.put("direc",direc);
 
-        BDremota bd = new BDremota(contexto,parametrosJSON1, php);
+        ConectarAlServidor bd = new ConectarAlServidor(contexto,parametrosJSON1, php);
         bd.execute();
 
         Intent inten3 = new Intent(Register.this, LoginActivity.class);
