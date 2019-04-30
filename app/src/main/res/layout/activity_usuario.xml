@@ -98,46 +98,6 @@
                 app:backgroundTint="@color/colorPrimary" />
 
             <Button
-                android:id="@+id/actnombre"
-                android:layout_width="207dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/ACT1"
-                app:backgroundTint="@color/colorPrimary" />
-
-            <Button
-                android:id="@+id/actpass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/ACTCONTRA"
-                app:backgroundTint="@color/colorPrimary" />
-
-            <Button
-                android:id="@+id/actdirec"
-                android:layout_width="207dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/ACTDIR"
-                app:backgroundTint="@color/colorPrimary" />
-
-            <Button
-                android:id="@+id/acttel"
-                android:layout_width="207dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/ACTEL"
-                app:backgroundTint="@color/colorPrimary" />
-
-            <Button
                 android:id="@+id/btnlogout"
                 android:layout_width="207dp"
                 android:layout_height="wrap_content"
@@ -155,16 +115,6 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:gravity="center"
                 android:text="@string/COMPDATOS"
-                app:backgroundTint="@color/colorPrimary" />
-
-            <Button
-                android:id="@+id/btneliminar"
-                android:layout_width="207dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/colorPrimary"
-                android:gravity="center"
-                android:text="@string/elimcuenta"
                 app:backgroundTint="@color/colorPrimary" />
 
 

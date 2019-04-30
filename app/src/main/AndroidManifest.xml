@@ -36,7 +36,6 @@
         android:roundIcon="@mipmap/ic_launcher_dress_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Migaleria"></activity>
         <activity android:name=".Galeria" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -49,10 +48,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:label="hola" />
 
         <uses-library
             android:name="org.apache.http.legacy"
