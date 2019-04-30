@@ -7,10 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -88,8 +85,8 @@ public class Adapter extends BaseAdapter {
                         contexto.startActivity(intent4);
                         break;
                     case 3:
-                        Intent intent6= new Intent(contexto,contacto.class);
-                        //Si el usuario ha pulsado 0, nos vamos al activity de contacto  y enviamos el correo del  usuario
+                        Intent intent6= new Intent(contexto, Contacto.class);
+                        //Si el usuario ha pulsado 0, nos vamos al activity de Contacto  y enviamos el correo del  usuario
                         intent6.putExtra("emailuser",emailusuario);
                         contexto.startActivity(intent6);
                         break;

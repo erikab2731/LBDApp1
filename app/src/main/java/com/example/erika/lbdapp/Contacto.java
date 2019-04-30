@@ -13,9 +13,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
-import com.example.erika.lbdapp.fragments.BlankFragment;
-import com.example.erika.lbdapp.fragments.maps;
-import com.example.erika.lbdapp.fragments.maps.OnFragmentInteractionListenermaps;
+import com.example.erika.lbdapp.fragments.ContactFragment;
+import com.example.erika.lbdapp.fragments.MapsFragment;
+import com.example.erika.lbdapp.fragments.MapsFragment.OnFragmentInteractionListenermaps;
 
 
 import java.io.BufferedReader;
@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
-public class contacto extends AppCompatActivity implements  DialogText.dialogtextlistener, BlankFragment.OnFragmentInteractionListener, OnFragmentInteractionListenermaps{
+public class Contacto extends AppCompatActivity implements  DialogText.dialogtextlistener, ContactFragment.OnFragmentInteractionListener, OnFragmentInteractionListenermaps{
     private final int CODIGO_DE_LLAMADA = 123;
     private boolean pedido = false;
     private String local = Locale.getDefault().toString();
@@ -53,11 +53,11 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
             config.locale = nuevaloc1;
             local = nuevaloc1.toString();
             getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-            maps= savedInstanceState.getBoolean("maps");
+            maps= savedInstanceState.getBoolean("MapsFragment");
         }
 
         if (!maps) {
-            currentfragment = new BlankFragment();
+            currentfragment = new ContactFragment();
             changefragment(currentfragment);
         }else {
             cambiaramaps(currentfragment);
@@ -86,7 +86,7 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
                     }
                     else {
                         //No se ha concedido el permiso
-                        Toast.makeText(contacto.this, "No has concedido el permiso ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Contacto.this, "No has concedido el permiso ", Toast.LENGTH_SHORT).show();
                     }
                 }break;
             default:
@@ -106,7 +106,7 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putString("locale",local);
-        savedInstanceState.putBoolean("maps",maps);
+        savedInstanceState.putBoolean("MapsFragment",maps);
 
     }
     @Override
@@ -135,13 +135,13 @@ public class contacto extends AppCompatActivity implements  DialogText.dialogtex
     @Override
     public void onFragmentInteraction() {
         DialogText dialog = new DialogText();
-        dialog.show( contacto.this.getSupportFragmentManager(), "etiqueta");
+        dialog.show( Contacto.this.getSupportFragmentManager(), "etiqueta");
     }
 
 
     public void cambiaramaps(Fragment fragment1) {
         maps = true;
-        fragment1 = new maps();
+        fragment1 = new MapsFragment();
         changefragment(fragment1);
     }
 

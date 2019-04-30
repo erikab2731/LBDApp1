@@ -91,7 +91,7 @@
         </service>
 
         <activity android:name=".Mislooks" />
-        <activity android:name=".contacto" />
+        <activity android:name=".Contacto" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,86 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context="com.example.erika.lbdapp.Mislooks">
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar"
+        app:layout_constraintBottom_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="MI OUTFIT"
-        android:textAppearance="@android:style/TextAppearance.Material.Notification.Title"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="367dp"
-        android:layout_height="328dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365"
-        app:srcCompat="@drawable/download" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <Button
-            android:id="@+id/btnguardar"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="401dp"
             android:layout_height="wrap_content"
-            android:text="guardar" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="MI OUTFIT"
+            android:textAppearance="@android:style/TextAppearance.Material.Notification.Title"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/btnpublicar"
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="publicar" />
-
-        <Button
-            android:id="@+id/galeria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GALERIA" />
+            android:layout_height="328dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.365"
+            app:srcCompat="@drawable/download" />
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
             android:text="SACAR FOTO " />
+
+        <Button
+            android:id="@+id/btnpublicar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="publicar" />
 
         <Button
             android:id="@+id/btngaleria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Galería LBDAPP" />
+
+        <Button
+            android:id="@+id/btnguardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GUARDAR EN EL TELÉFONO"
+            android:backgroundTint="@color/colorPrimary"/>
+
+        <Button
+            android:id="@+id/galeria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Galeria del Teléfono"
+            android:backgroundTint="@color/colorPrimary"/>
+
     </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

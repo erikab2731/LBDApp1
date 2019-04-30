@@ -44,7 +44,6 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
         setContentView(R.layout.activity_mislooks);
         elImageView = findViewById(R.id.imageView2);
         if (savedInstanceState != null) {
-            //if there is a bundle, use the saved image resource (if one is there)
             elImageView.setImageBitmap((Bitmap) savedInstanceState.getParcelable("laminiatura"));
         }
         gal = findViewById(R.id.btngaleria);
@@ -80,88 +79,39 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContentValues values = new ContentValues();
-                values.put(Images.Media.TITLE, "hola");
-                values.put(Images.Media.DISPLAY_NAME, "hola");
-                values.put(Images.Media.DESCRIPTION, "ergwerreg");
-                values.put(Images.Media.MIME_TYPE, "image/jpeg");
-                values.put(Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
-                values.put(Images.Media.DATE_TAKEN, System.currentTimeMillis());
 
-               Uri url = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                OutputStream imageOut = null;
-                try {
-                    imageOut = getContentResolver().openOutputStream(url);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    laminiatura.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
-                } finally {
-                    try {
-                        imageOut.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                /*
-                long id = ContentUris.parseId(url);
-                // Wait until MINI_KIND thumbnail is generated.
-                Bitmap miniThumb = Images.Thumbnails.getThumbnail(getContentResolver(), id, Images.Thumbnails.MINI_KIND, null);
-                // This is for backward compatibility.
-                storeThumbnail(getContentResolver(), miniThumb, id, 50F, 50F,Images.Thumbnails.MICRO_KIND);
+               if(laminiatura != null) {
+                   ContentValues values = new ContentValues();
+                   values.put(Images.Media.TITLE, "hola");
+                   values.put(Images.Media.DISPLAY_NAME, "hola");
+                   values.put(Images.Media.DESCRIPTION, "ergwerreg");
+                   values.put(Images.Media.MIME_TYPE, "image/jpeg");
+                   values.put(Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+                   values.put(Images.Media.DATE_TAKEN, System.currentTimeMillis());
 
-               
-                //hacer el intent
-                Intent i = new Intent(Mislooks.this,Migaleria.class);
-                i.putExtra("uri",url);
-                startActivity(i);
-                */
+                   Uri url = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                   OutputStream imageOut = null;
+                   try {
+                       imageOut = getContentResolver().openOutputStream(url);
+                   } catch (FileNotFoundException e) {
+                       e.printStackTrace();
+                   }
+                   try {
+                       laminiatura.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
+                   } finally {
+                       try {
+                           imageOut.close();
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                   }
+               }
+               else{
+                   Toast.makeText(Mislooks.this, "No has sacado una foto!", Toast.LENGTH_LONG).show();
+               }
 
             }
 
-            private Bitmap storeThumbnail(ContentResolver cr,
-                                        Bitmap source,
-                                        long id,
-                                        float width,
-                                        float height,
-                                        int kind) {
-
-                Matrix matrix = new Matrix();
-
-                float scaleX = width / source.getWidth();
-                float scaleY = height / source.getHeight();
-
-                matrix.setScale(scaleX, scaleY);
-
-                Bitmap thumb = Bitmap.createBitmap(source, 0, 0,
-                        source.getWidth(),
-                        source.getHeight(), matrix,
-                        true
-                );
-
-                ContentValues values = new ContentValues(4);
-                values.put(Images.Thumbnails.KIND,kind);
-                values.put(Images.Thumbnails.IMAGE_ID,(int)id);
-                values.put(Images.Thumbnails.HEIGHT,thumb.getHeight());
-                values.put(Images.Thumbnails.WIDTH,thumb.getWidth());
-
-                Uri url = cr.insert(Images.Thumbnails.EXTERNAL_CONTENT_URI, values);
-
-                try {
-                    OutputStream thumbOut = cr.openOutputStream(url);
-                    thumb.compress(Bitmap.CompressFormat.JPEG, 100, thumbOut);
-                    thumbOut.close();
-                    return thumb;
-                } catch (FileNotFoundException ex) {
-                    return null;
-                } catch (IOException ex) {
-                    return null;
-                }
-
-
-
-            }
         });
         publicar = findViewById(R.id.btnpublicar);
         publicar.setOnClickListener(new View.OnClickListener() {
@@ -197,8 +147,6 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
         if (requestCode == CODIGO_GALERIA && resultCode == RESULT_OK) {
             Uri imagenSeleccionada = data.getData();
             Log.d("GALERIA", "onActivityResult: " + imagenSeleccionada.toString());
-           // elImageView.setImageURI(imagenSeleccionada);
-            //Picasso.with(contexto).load(imagenSeleccionada).fit().into(elImageView);
             try {
                 laminiatura = MediaStore.Images.Media.getBitmap(this.getContentResolver(),imagenSeleccionada);
             } catch (IOException e) {
@@ -246,6 +194,48 @@ public class Mislooks extends AppCompatActivity implements BDremota.AsyncRespons
         super.onSaveInstanceState(savedInstanceState);
         // se guarda la imagen que se muestra en el imageview
         savedInstanceState.putParcelable("laminiatura", laminiatura);
+
+    }
+    private Bitmap storeThumbnail(ContentResolver cr,
+                                  Bitmap source,
+                                  long id,
+                                  float width,
+                                  float height,
+                                  int kind) {
+
+        Matrix matrix = new Matrix();
+
+        float scaleX = width / source.getWidth();
+        float scaleY = height / source.getHeight();
+
+        matrix.setScale(scaleX, scaleY);
+
+        Bitmap thumb = Bitmap.createBitmap(source, 0, 0,
+                source.getWidth(),
+                source.getHeight(), matrix,
+                true
+        );
+
+        ContentValues values = new ContentValues(4);
+        values.put(Images.Thumbnails.KIND,kind);
+        values.put(Images.Thumbnails.IMAGE_ID,(int)id);
+        values.put(Images.Thumbnails.HEIGHT,thumb.getHeight());
+        values.put(Images.Thumbnails.WIDTH,thumb.getWidth());
+
+        Uri url = cr.insert(Images.Thumbnails.EXTERNAL_CONTENT_URI, values);
+
+        try {
+            OutputStream thumbOut = cr.openOutputStream(url);
+            thumb.compress(Bitmap.CompressFormat.JPEG, 100, thumbOut);
+            thumbOut.close();
+            return thumb;
+        } catch (FileNotFoundException ex) {
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+
+
 
     }
 

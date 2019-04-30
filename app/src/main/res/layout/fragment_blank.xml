@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".fragments.BlankFragment">
+    tools:context=".fragments.ContactFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:context=".contacto">
+        tools:context=".Contacto">
 
         <TextView
             android:id="@+id/textView13"

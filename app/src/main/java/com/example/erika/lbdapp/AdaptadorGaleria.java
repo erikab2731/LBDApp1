@@ -9,9 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
-public class adaptadorgaleria extends RecyclerView.Adapter<ElViewHolder2> {
+public class AdaptadorGaleria extends RecyclerView.Adapter<ElViewHolder2> {
 
 
     private ArrayList<Bitmap> lostitulos;
@@ -19,7 +22,7 @@ public class adaptadorgaleria extends RecyclerView.Adapter<ElViewHolder2> {
     private OnItemClickListener itemClickListener;
 
 
-    public adaptadorgaleria(ArrayList<Bitmap> titulos, Context elcontexto) {
+    public AdaptadorGaleria(ArrayList<Bitmap> titulos, Context elcontexto) {
         this.lostitulos = titulos;
         this.contexto = elcontexto;
     }
@@ -33,7 +36,7 @@ public class adaptadorgaleria extends RecyclerView.Adapter<ElViewHolder2> {
 
     @Override
     public void onBindViewHolder(@NonNull ElViewHolder2 elViewHolder2, int i) {
-        Log.d("esto esta llegando aqui", "onBindViewHolder: "+lostitulos.get(i));
+
         elViewHolder2.laimagen.setImageBitmap(lostitulos.get(i));
 
     }
